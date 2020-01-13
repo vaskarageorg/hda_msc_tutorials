@@ -21,6 +21,6 @@ Once you are in the desired folder, enter
 git clone https://github.com/janithPet/hda_msc_tutorials.git
 ```
 
-This will create a new folder `~\tutorials\hda_msc_tutorials\`. Within this, you can navigate to each tutorial, which will be in their own numbered folders. The format is `<tutorial number>_<title>`.
+This will create a new folder `~/tutorials/hda_msc_tutorials/`. Within this, you can navigate to each tutorial, which will be in their own numbered folders. The format is `<tutorial number>_<title>`.
 
-From there, follow the instructions in `~\tutorials\hda_msc_tutorials\<tutorial folder>\README.md` to set up the environment.
+From there, follow the instructions in `~/tutorials/hda_msc_tutorials/<tutorial folder>/README.md` to set up the environment.
