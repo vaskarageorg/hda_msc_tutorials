@@ -109,15 +109,11 @@ train.test.split <- function(df, test.size=0.2) {
 
 # Split each dataset
 split.setosa <- train.test.split(setosa)
-setosa.train <- split.setosa$train
-setosa.test <- split.setosa$test
-
 split.versicolor <- train.test.split(versicolor)
-versicolor.train <- split.versicolor$train
-versicolor.test <- split.versicolor$test
 
-training.data <- rbind(setosa.train, versicolor.train)
-test.data <- rbind(setosa.test, versicolor.test)
+# Combine the two classes
+training.data <- rbind(split.setosa$train, split.versicolor$train)
+test.data <- rbind(split.setosa$test, split.versicolor$test)
 ```
 
 
