@@ -1,0 +1,147 @@
+---
+title: 'Tutorial 1: Introduction to Machine Learning with Python¶'
+author: "Jonathan Ish-Horowicz"
+date: "12/01/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Tutorial 1: Introduction to Machine Learning with Python
+
+The goal of this tutorial is to introduce a typical workflow in carrying out ML in R.  Similarly to last week's Python tutorial, this includes:
+
+1. accessing and organising data,
+2. assessing the data,
+3. visualising the data,
+4.  a) creating training, b) test datasets and c) learning a model using them and evaluating its performance.
+
+
+# 1) Load Data
+
+We load the same iris dataset as last week, which has 150 samples and 4 attributes. There are 3 classes (species).
+
+In R we can load the Iris dataset from the `datasets` package:
+
+```{r message=FALSE}
+# Load the iris dataset
+library(datasets)
+data(iris)
+iris$Species <- as.character(iris$Species)
+```
+
+# 2) Statistics of the dataset
+
+Now compute the mean, standard deviation, minimum and maximum of each attribute.
+
+Suggestion: use the the `group_by` and `summarise_all` functions from the `dplyr` library.
+
+```{r message=FALSE}
+library(dplyr)
+
+# Calculate the mean of each attribute
+
+# Calculate the standard deviation of each attribute
+
+# Calculate the minimum of each attribute
+
+# Calculate the maximum of each attribute
+
+```
+
+# 3) Visualise the dataset
+
+Make some exploratory plots here.
+
+Suggestion: use the `ggplot2` library. For a nice pairs plot use the `ggpairs` function from `GGally` (a `ggplot2` extension library).
+
+```{r message=FALSE}
+library(ggplot2)
+library(GGally)
+```
+
+# 4) Classification using Least Squares
+
+Here we will be carrying out classification using the least squares formulation on 2 classes of the dataset.
+
+a) Create separate datasets for the classes `setosa` and `versicolor`.
+
+```{r}
+# your code here
+
+# result should be two dataframes (one for each for setosa, versicolor classes),
+# each with dim (50,5) - 4 attributes plus column for class
+stopifnot(all(dim(setosa)==c(50,5)))
+stopifnot(all(dim(versicolor)==c(50,5)))
+```
+
+
+b) add a column to each dataset where the column is $1$ if the class is `setosa` and $-1$ otherwise.
+
+```{r}
+# your code here
+
+# result should add a column to each of setosa and versicolor
+stopifnot(all(dim(setosa)==c(50,6)))
+stopifnot(all(dim(versicolor)==c(50,6)))
+```
+
+
+c) create training and test datasets, with 20% of the data for testing. This 80 training points and 20 testing points in total (half this per class).
+
+```{r}
+# your code here
+
+# resulting dataframes (one each for training and test data) should have
+# the appropriate sizes
+stopifnot(all(dim(training.data)==c(80,6)))
+stopifnot(all(dim(test.data)==c(20,6)))
+```
+
+
+
+d) apply the least squares solution to obtain an optimal solution for different combinations of the 4 available attributes. The code to create a list containing all the combinations of the attributes has been provided.
+
+```{r}
+# Creates all possible combinations of attributes
+# attribute.combinations is a list whose elements are lists of attributes
+attribute.names <- colnames(iris)[1:4]
+attribute.combinations <- do.call(
+  c,
+  lapply(1:4, function(i) as.list(data.frame(combn(attribute.names, i))))
+  )
+names(attribute.combinations) <- 1:length(attribute.combinations)
+
+
+return.predictions <- function(attribute.names, training.data, test.data) {
+  
+  # Format training and test data (as matrices)
+  ### your code here
+
+  # Calculate optimal weights
+  ### your code here
+  
+  # Make predictions
+  ### your code here
+
+  return(predictions)
+}
+```
+
+
+
+e) evaluate which input attributes are the best.
+
+```{r}
+# Calculate the mean square error between some predictions and
+# the corresponding testing data
+return.mse <- function(predictions, testing.data) {
+  ### your code here
+  return(mse)
+}
+
+# Calculate the test MSE for each the elements of attribute.combinations
+# by calling return.predictions and return.mse
+```
