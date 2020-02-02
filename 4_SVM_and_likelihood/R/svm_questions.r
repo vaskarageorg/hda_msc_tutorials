@@ -13,15 +13,7 @@ plot(df$X_x, df$X_y, col = df$labels+3)
 # Note there are several possibilities which separate the data? 
 # What happens to the classification of point [0.6, 2.1] (or similar)?
 
-xfit <- seq(-1, 3.5, length.out=50)
-plot(df$X_x, df$X_y, col = df$labels+3)
 
-for (i in list(c(1, 0.65), c(0.5, 1.6), c(-0.2, 2.9))){
-  lines(xfit, i[1]*xfit + i[2], type = "l")
-}
-
-
-points(0.6, 2.1, col = "red")
 
 # With SVM rather than simply drawing a zero-width line between the 
 # classes, we draw a margin of some width around each line, up to the nearest point. 
