@@ -3,7 +3,7 @@
 
 # Reading in dataset (you will have to change the working directory path)
 setwd("~/Documents/PhD/teaching/Machine_learning_2020/R/")
-df <- read.csv(file = 'make_blobs_1.csv')
+df <- read.csv(file = 'make_blobs_2.csv')
 df2 <- read.csv(file = 'make_circles_1.csv')
 df3 <- read.csv(file = 'make_circles_2.csv')
 
@@ -40,7 +40,6 @@ plot(df$X_x, df$X_y, col = df$labels+3)
 # Task 3: Use the e1071 package to build a support vector classifier using a linear kernel
 # Plot the decision fuction on the data
 
-install.packages("e1071")
 library("e1071")
 
 
@@ -64,12 +63,8 @@ plot(df2$X_x, df2$X_y, col = df2$labels+3)
 
 # Consider projecting our data into a 3D plane
 
-r=c()
-for (i in 1:length(df2$X_x)) { 
-  r[i]=exp(-(df2$X_x[i] ** 2+df2$X_y[i]** 2))
-}
+df2$r = exp(-(df2$X_x**2 + df2$X_y** 2))
 
-install.packages("scatterplot3d") # Install
 library("scatterplot3d") # load
 
 scatterplot3d(x = df2$X_x, y=df2$X_y, z=r, color = df2$labels+3)
@@ -101,5 +96,5 @@ plot(df3$X_x, df3$X_y, col = df3$labels+3)
 
 
 
-# Task 9: Use GridSearchCV from superml to find the optimum parameters for C. 
+# Task 9: Use e1071::tune.svm from to find the optimum parameters for C. 
 
