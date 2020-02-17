@@ -44,23 +44,25 @@ The easiest and most common format to receive data in is a CSV. Other formats wo
 1. Read heart.csv into a pandas dataframe and print out its shape
 
 ```{r message=FALSE}
-
+heart = read.csv(file.choose())
 ```
 
 ```{r message=FALSE}
-
+dim(heart)
 ```
 
 1. Show the first few rows of the data
 
 ```{r message=FALSE}
-
+head(data)
 
 ```
 
 2. Extract the labels from the data and store them as an array in a variable called y. Then print the first 10 values to make sure you stored them correctly as an array.
 
 ```{r message=FALSE}
+y = heart$target
+
 
 
 ```
@@ -68,8 +70,8 @@ The easiest and most common format to receive data in is a CSV. Other formats wo
 3. Remove the labels from the data we could use to train a model and store the remaining columns in a variable called X_df (_df is appended to remember this is a dataframe object still). Print a preview of the first 10 rows to make sure you did this.
 
 ```{r message=FALSE}
-
-
+X_df = heart[,-14]
+head(X_df)
 ```
 
 ## Cleaning up the Data
@@ -110,12 +112,16 @@ According to the website, this is what the dataset should look like...
 
 ```{r message=FALSE}
 # count
+head(X_df)
 
 # mean
+mean(X_df$ο.Ώage)
 
 # std
+sd(X_df$ο.Ώage)
 
 # min
+
 
 # max
 
@@ -124,13 +130,14 @@ According to the website, this is what the dataset should look like...
 5. How many `male` and `female` patients are there?
 
 ```{r message=FALSE}
-
+table(X_df$sex)
 
 ```
 
 6. Check how many different values are stored in the `cp` column with a single function.
 
 ```{r message=FALSE}
+length(unique(X_df$cp))
 
 ```
 
@@ -143,20 +150,21 @@ According to the website, this is what the dataset should look like...
 8. Try replacing the name `oldpeak` to `stdepress`.
 
 ```{r message=FALSE}
+colnames(X_df)[10] = 'stdepress'
 
 ```
 
 9. Change the values in sex to be numbers (male = 1, female = 0). Hint: Try applying a map function
 
 ```{r message=FALSE}
-
+X_df$sex = ifelse(X_df$sex == 'male', 1, 0)
 
 ```
 
 10. Translate the T and F values in the labels to numerical values (1 and 0, respectively). Be careful not to change the order!
 
 ```{r message=FALSE}
-
+y = ifelse(y == TRUE, 1, 0)
 
 ```
 
@@ -180,6 +188,8 @@ Numbers are great for expressing quantifiable information, but "a picture says a
 12. Make a pie chart to visualise the balance of male to female patients
 
 ```{r message=FALSE}
+slices = c(0, 1)
+
 
 ```
 
@@ -187,12 +197,14 @@ Numbers are great for expressing quantifiable information, but "a picture says a
 13. Make a box & whisker plot to visualise the ages of the patients.
 
 ```{r message=FALSE}
+boxplot(X_df$ο.Ώage)
 
 ```
 
 14. Make a box & whisker plot to visualise the ages with respect to whether the heart disease is present or not.
 
 ```{r message=FALSE}
+boxplot(X_df$ο.Ώage ~ X_df$sex)
 
 
 ```

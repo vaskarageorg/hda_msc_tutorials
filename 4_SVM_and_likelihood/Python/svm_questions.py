@@ -21,7 +21,18 @@ plt.scatter(X[:, 0], X[:, 1], c=y, s=50, cmap='autumn')
 plt.show()
 
 # Task 1: Attempt to use linear regression to separate this data using linear regression.
+
+xfit = np.linspace(-1, 3.5)
+plt.scatter(X[:, 0], X[:,1], c=y, s=50, cmap = 'autumn')
+for m,b in [(1,0.85), (0.2,1.6),(-0.1,2.5)]:
+    plt.plot(xfit, m*xfit + b, '-k')
+
+plt.plot([0.6],[2.1],'x',color='red',markeredgewidth = 2, markersize=10)
+plt.xlim(-1,3.5)
+plt.show()
 # Note there are several possibilities which separate the data? 
+
+
 # What happens to the classification of point [0.6, 2.1] (or similar)?
 
 
@@ -45,6 +56,16 @@ plt.xlim(-1, 3.5)
 plt.show()
 """
 # Task 2: Draw the margin around the lines you chose in Task 1.
+xfit = np.linspace(-1, 3.5)
+plt.scatter(X[:, 0], X[:,1], c=y, s=50, cmap = 'autumn')
+for m,b,d in [(1,0.85, 0.2), (0.2,1.6, 0.1),(-0.1,2.5, 0.7), (0.1, 2.2, 0.9)]:
+    yfit = m * xfit + b
+    plt.plot(xfit, yfit, '-k')
+    plt.fill_between(xfit, yfit - d, yfit + d, edgecolor='none',
+                     color='#AAAAAA', alpha=0.4)
+
+plt.xlim(-1,3.5)
+plt.show()
 
 
 
@@ -53,6 +74,39 @@ plt.show()
 
 # Task 3: Use the sklearn package to build a support vector classifier using a linear kernel
 # (hint: you will need from sklearn.svm import SVC). Plot the decision fuction on the data
+
+from mlxtend.plotting import plot_decision_regions
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.svm import SVC
+
+from sklearn.svm import SVC
+from sklearn import svm
+
+clf = svm.SVC()
+clf.fit(X, y)
+SVC()
+clf.predict([[1, 5]])
+
+plt.scatter(X[:,0],X[:,1])
+
+
+# Task 4: Change the number of points in the dataset using X = X[:N] and y = y[:N]
+# and build the classifier again using a linear kernel
+# Plot the decision function. Do you see any differences?
+
+
+
+## So far we have considered linear boundaries but this is not always the case
+
+## Consider the new dataset
+    
+from sklearn.datasets.samples_generator import make_circles
+X2, y2 = make_circles(100, factor=.1, noise=.1)
+
+plt.scatter(X2[:,0], X2[:,1])
+
+#Task 5: Build a classifier using a linear kernel and plot the decision making function
 
 def plot_svc_decision_function(model, ax=None):
     """Plot the decision function for a 2D SVC"""
@@ -80,26 +134,30 @@ def plot_svc_decision_function(model, ax=None):
     ax.set_xlim(xlim)
     ax.set_ylim(ylim)
 
-# Task 4: Change the number of points in the dataset using X = X[:N] and y = y[:N]
-# and build the classifier again using a linear kernel
-# Plot the decision function. Do you see any differences?
 
+C = 1.0  # SVM regularization parameter
+clf = svm.SVC(kernel = 'linear',  gamma=0.7, C=C )
+clf.fit(X2, y2)
 
+w = clf.coef_[0]
+w
+a = -w[0] / w[1]
+a
 
-## So far we have considered linear boundaries but this is not always the case
+xx = np.linspace(-5, 5)
+yy = a * xx - (clf.intercept_[0]) / w[1]
 
-## Consider the new dataset
-    
-from sklearn.datasets.samples_generator import make_circles
-X2, y2 = make_circles(100, factor=.1, noise=.1)
-
-#Task 5: Build a classifier using a linear kernel and plot the decision making function
+plt.plot(xx, yy, 'k-')
 
 
 # These results should look wrong so we will try something else
 
 # Consider projecting our data into a 3D plane
 r = np.exp(-(X2 ** 2).sum(1))
+
+dd1 = X2.sum(1)
+
+dd1.len()
 
 from mpl_toolkits import mplot3d
 
@@ -116,13 +174,26 @@ plt.show()
 # space. This is what the 'rbf' kernel does.
 
 #Task 6: Try building a classifier using the 'rbf' kernel
+C = 1.0  # SVM regularization parameter
+clf = svm.SVC(kernel = 'rbf',  gamma=0.7, C=C )
+clf.fit(X2, y2)
 
-
+clf
 # Task 7: Go back to your original dataset (ie. make blobs) and try using different kernels 
 # to build the classifier and plot the results
 # Compare the differences between the models
 
+clf1 = svm.SVC(kernel = 'linear',  gamma=0.7, C=C )
+clf1.fit(X2, y2)
+clf1
 
+clf2 = svm.SVC(kernel = 'poly',  degree=3, gamma=0.7, C=C )
+clf2.fit(X2, y2)
+clf2
+
+clf2 = svm.SVC(kernel = 'poly',  degree=2, gamma=0.7, C=C )
+clf2.fit(X2, y2)
+clf2
 
 ## So far we have looked at clearly delineated data. Consider the following dataset
 ## where the margins are less clear
