@@ -11,3 +11,11 @@ or
 ```conda install --file requirements.txt``` 
 
 if you are using `Anaconda`.
+
+Otherwise, you should be able to install it individually using:
+
+```pip install graphviz```
+
+or 
+
+```conda install -c anaconda graphviz```.
